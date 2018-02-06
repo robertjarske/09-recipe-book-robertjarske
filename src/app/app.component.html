@@ -1,6 +1,10 @@
 <header>
-  <h1>{{title}}</h1>
+  <h1 class="main-heading">{{title}}</h1>
+  <nav>
+    <a class="nav-link" routerLink="/">Home</a>
+    <a class="nav-link" routerLink="/recipes">Recipes</a>
+  </nav>
 </header>
 
-<app-recipes></app-recipes>
+<router-outlet></router-outlet>
 
