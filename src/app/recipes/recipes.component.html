@@ -1,0 +1,10 @@
+<h2>Our Top Recipes</h2>
+<ul>
+  <li *ngFor='let recipe of recipes' [class.selected]='recipe === selectedRecipe' (click)='onSelect(recipe)'>
+    <img src="{{ recipe.photoUrl }}"/>
+    <h3>{{ recipe.name }}</h3>
+  </li>
+</ul>
+
+
+<app-recipe-detail [recipe]="selectedRecipe"></app-recipe-detail>
