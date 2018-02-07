@@ -7,6 +7,10 @@
 [class*='col-']:last-of-type {
   padding-right: 0;
 }
+
+[class*='col-']:first-child {
+  padding-left: 20px;
+}
 a {
   text-decoration: none;
 }
@@ -28,6 +32,8 @@ h4 {
 
 img {
   margin-top: 5px;
+  position: relative;
+  width: 75%;
 }
 
 .grid {

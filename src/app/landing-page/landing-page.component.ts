@@ -8,7 +8,7 @@ import { RecipeService } from '../recipe.service';
   styleUrls: ['./landing-page.component.css']
 })
 export class LandingPageComponent implements OnInit {
-  recipes: Recipe[] = [];
+  recipes: Recipe[];
 
   constructor(private recipeService: RecipeService) { }
 
@@ -18,7 +18,7 @@ export class LandingPageComponent implements OnInit {
 
   getRecipes(): void {
     this.recipeService.getRecipes()
-      .subscribe(recipes => this.recipes = recipes.slice(1, 5));
+      .subscribe(recipes => this.recipes = recipes);
   }
 
 }

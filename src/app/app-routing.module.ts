@@ -11,6 +11,7 @@ const routes: Routes = [
   { path: '', component: LandingPageComponent },
   { path: 'recipes', component: RecipesComponent },
   { path: 'recipes/:id', component: RecipeDetailComponent },
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({

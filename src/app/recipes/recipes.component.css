@@ -1,6 +1,7 @@
 * {
   display: flex;
   justify-content: center;
+
 }
 
 h2 {
@@ -26,6 +27,7 @@ li>a {
 ul {
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
 }
 
 .selected {

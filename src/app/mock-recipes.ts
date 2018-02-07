@@ -9,3 +9,4 @@ export const RECIPES: Recipe[] = [
   {id: 7, name: 'Stroganoff', description: 'Yummy Stroganoff', photoUrl: 'https://placehold.it/200x200'},
 ];
 
+

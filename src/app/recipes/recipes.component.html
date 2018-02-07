@@ -2,7 +2,7 @@
 <ul>
   <li *ngFor='let recipe of recipes'>
     <a routerLink="/recipes/{{ recipe.id }}">
-      <img src="{{ recipe.photoUrl }}"/>
+      <img src="http://{{ recipe.photoUrl }}"/>
       <h3>{{ recipe.name }}</h3>
     </a>
   </li>

@@ -10,14 +10,15 @@ import { RecipeService } from '../recipe.service';
   styleUrls: ['./recipes.component.css']
 })
 export class RecipesComponent implements OnInit {
-
   recipes: Recipe[];
 
   constructor(private recipeService: RecipeService) { }
 
   getRecipes(): void {
    this.recipeService.getRecipes()
-    .subscribe(recipes => this.recipes = recipes);
+    .subscribe(recipes => {
+      this.recipes = recipes;
+    });
   }
 
   ngOnInit() {

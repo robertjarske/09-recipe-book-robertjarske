@@ -1,42 +1,57 @@
-import 'rxjs/Rx';
 import { Injectable } from '@angular/core';
 import { Recipe } from './recipe';
 import { RECIPES } from './mock-recipes';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import { catchError, map, tap } from 'rxjs/operators';
 
-import {Http, Response} from '@angular/http';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { catchError, flatMap, map, tap } from 'rxjs/operators';
 
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { Http, Response } from '@angular/http';
 
 @Injectable()
 export class RecipeService {
-  private apiUrl = 'http://www.themealdb.com/api/json/v1/1/latest.php';
-
-  constructor(
-    private http: HttpClient,
-
-  ) { }
+  constructor(private http: HttpClient) {}
 
   getRecipes(): Observable<Recipe[]> {
-    return this.http
-      .get(this.apiUrl)
-      .map((res: Response) => {
-        console.log(res.meals);
-        return res.meals.forEach(recipe => {
-          let recipes: Recipe[] = [
-            {id: recipe.idMeal, name: recipe.strMeal, description: recipe.strInstructions, photoUrl: recipe.strMealThumb}
-          ];
-        });
+    const apiUrl = 'http://www.themealdb.com/api/json/v1/1/latest.php';
+    const recipes = [];
 
-        // return <Recipe[]>res.meals;
-      });
+    return this.http.get<Recipe[]>(apiUrl)
+      .pipe(
+        flatMap((res) => {
+          return res['meals'];
+        }),
+        map((meal: Recipe[]) => {
+          const recipe = new Recipe(
+            +meal['idMeal'],
+            meal['strMeal'],
+            meal['strInstructions'],
+            meal['strMealThumb']
+          );
+          recipes.push(recipe);
+          return recipes;
+        })
+      );
   }
-
 
   getRecipe(id: number): Observable<Recipe> {
-    return of(RECIPES.find(recipe => recipe.id === id));
-  }
+    const apiUrl = `http://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
 
+    return this.http.get<Recipe>(apiUrl)
+      .pipe(
+        flatMap((res) => {
+          return res['meals'];
+        }),
+        map((meal: Recipe) => {
+          const recipe = new Recipe(
+            +meal['idMeal'],
+            meal['strMeal'],
+            meal['strInstructions'],
+            meal['strMealThumb']
+          );
+          return recipe;
+        })
+      );
+  }
 }
