@@ -1,0 +1,19 @@
+{
+  "saved": [
+    {
+      "id": 1,
+      "title": "My saved recipes",
+      "recipes": [
+        52807,
+        52870,
+        52872,
+        52807
+      ]
+    },
+    {
+      "id": 2,
+      "title": "My other saved recipes",
+      "recipes": []
+    }
+  ]
+}
