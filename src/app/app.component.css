@@ -1,20 +1,17 @@
-
 header {
-  height: 50vh;
+  height: 70vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  background-image: url('https://placehold.it/2000x500');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-
+  background: transparent;
 }
 
 .main-heading {
   color: #FFF;
   font-size: 5em;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 nav {
@@ -28,4 +25,12 @@ nav {
   padding: 15px;
   border-radius: 10px;
   font-size: 1.7em;
+}
+
+
+.back-btn {
+  background: transparent;
+  color: #FFF;
+  border: none;
+  margin-left: 20px;
 }
