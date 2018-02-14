@@ -3,7 +3,10 @@ import { Recipe } from '../recipe';
 
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { List } from '../list';
+
 import { RecipeService } from '../recipe.service';
+import { SavedService } from '../saved/saved.service';
 
 
 
@@ -15,10 +18,12 @@ import { RecipeService } from '../recipe.service';
 export class RecipeDetailComponent implements OnInit {
 
   @Input() recipe: Recipe;
+  @Input() list: List;
 
   constructor(
     private route: ActivatedRoute,
     private recipeService: RecipeService,
+    private savedService: SavedService,
     private location: Location
   ) {}
 
@@ -30,6 +35,11 @@ export class RecipeDetailComponent implements OnInit {
     const id = +this.route.snapshot.paramMap.get('id');
     this.recipeService.getRecipe(id)
       .subscribe(recipe => this.recipe = recipe);
+  }
+
+  saveRecipe(recipeId) {
+    const listId = 1;
+    this.recipeService.saveRecipe(listId, recipeId);
   }
 
   goBack(): void {

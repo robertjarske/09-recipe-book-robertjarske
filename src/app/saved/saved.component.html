@@ -1,0 +1,11 @@
+<button class="back-btn" (click)='goBack()'><clr-icon shape="rewind" size="34" class="is-solid"></clr-icon></button>
+<div *ngIf='list'>
+  <h2>Your saved recipe-lists</h2>
+  <ul>
+    <li *ngFor="let list of list">
+      <a routerLink="/saved/{{list.id}}">
+        {{list.title}}
+      </a>
+    </li>
+  </ul>
+

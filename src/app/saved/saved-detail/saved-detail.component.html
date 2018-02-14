@@ -1,0 +1,24 @@
+<button class="back-btn" (click)='goBack()'><clr-icon shape="rewind" size="34" class="is-solid"></clr-icon></button>
+<div *ngIf='list'>
+  <h2>{{ list.title }}</h2>
+  <ul>
+
+
+    <li *ngFor="let recipe of list.recipes" class="col-1-4">
+      <div class="card">
+        <div class="card-img">
+          <img src="http://{{recipe['meals'][0]['strMealThumb']}}">
+          <div class="card-block" routerLink="/recipes/{{recipe['meals'][0]['idMeal']}}">
+              <h4 class="card-title">{{recipe['meals'][0]['strMeal']}}</h4>
+           </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button type="button" class="btn btn-danger" (click)="removeRecipe(list.id, recipe['meals'][0]['idMeal'])">
+          Remove
+        </button>
+      </div>
+    </li>
+  </ul>
+</div>
+

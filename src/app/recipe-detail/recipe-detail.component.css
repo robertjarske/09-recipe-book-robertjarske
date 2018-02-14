@@ -3,12 +3,12 @@ button {
   font-size: 1em;
 }
 div {
-  width: 600px;
+  width: 900px;
   margin-top: 40px;
   margin-left: auto;
   margin-right: auto;
   padding-bottom: 30px;
-  background-color: peachpuff;
+  background-color: grey;
   display: flex;
   flex-direction: column;
   justify-content: center;

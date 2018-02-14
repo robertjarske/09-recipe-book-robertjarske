@@ -1,77 +1,47 @@
-/* DashboardComponent's private CSS styles */
-[class*='col-'] {
-  float: left;
-  padding-right: 20px;
-  padding-bottom: 20px;
-}
-[class*='col-']:last-of-type {
-  padding-right: 0;
+
+h2 {
+  margin: 30px 0 30px 0;
 }
 
-[class*='col-']:first-child {
-  padding-left: 20px;
-}
-a {
-  text-decoration: none;
-}
-*, *:after, *:before {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
 h3 {
-  text-align: center;
-  margin-top: 10px;
-  margin-bottom: 0;
-  font-size: 2em;
-}
-h4 {
-  position: relative;
-  font-size: 1.5em;
+  margin: 30px 0 5px 0;
 }
 
-img {
-  margin-top: 5px;
-  position: relative;
-  width: 75%;
+li {
+  list-style-type: none;
+
 }
 
-.grid {
-  margin: 0;
+/* li>a {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: #000;
+} */
+
+
+ul {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
 }
-.col-1-4 {
+
+ul>a {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
   width: 25%;
+  color: #000;
 }
-.module {
-  padding: 20px;
-  text-align: center;
-  color: #eee;
-  max-height: 120px;
-  min-width: 120px;
-  background-color: #607D8B;
-  border-radius: 2px;
+
+.card-block {
+  position: absolute;
+  top: 30px;
+  background-color: rgba(0, 0, 0, 0.4);
+
+
 }
-.module:hover {
-  background-color: #EEE;
-  cursor: pointer;
-  color: #607d8b;
-}
-.grid-pad {
-  padding: 10px 0;
-}
-.grid-pad > [class*='col-']:last-of-type {
-  padding-right: 20px;
-}
-@media (max-width: 600px) {
-  .module {
-    font-size: 10px;
-    max-height: 75px; }
-}
-@media (max-width: 1024px) {
-  .grid {
-    margin: 0;
-  }
-  .module {
-    min-width: 60px;
-  }
+
+h4 {
+  color: #FFF;
 }

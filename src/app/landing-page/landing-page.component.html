@@ -1,10 +1,27 @@
-<h3>Top Recipes</h3>
+<!-- <h3>Latest Recipes</h3>
 <div class="grid grid-pad">
     <a *ngFor="let recipe of recipes" class="col-1-4"
     routerLink="/recipes/{{recipe.id}}">
     <div class="module recipe">
       <h4>{{ recipe.name }}</h4>
-      <img src="http://{{ recipe.photoUrl }}" />
+      <img src="{{ recipe.photoUrl }}" />
     </div>
   </a>
-</div>
+</div> -->
+
+<ul class="row" *ngIf="recipes else loading">
+    <a *ngFor="let recipe of recipes | slice:0:4" class="col-1-4"
+    routerLink="/recipes/{{recipe.id}}">
+    <li>
+      <div class="card">
+        <div class="card-img">
+            <img [src]='recipe.photoUrl'>
+            <div class="card-block" routerLink="/recipe/{{recipe.id}}">
+                <h4 class="card-title">{{recipe.name}}</h4>
+            </div>
+        </div>
+      </div>
+    </li>
+    </a>
+    <ng-template #loading>Loading recipes...</ng-template>
+  </ul>

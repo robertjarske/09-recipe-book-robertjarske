@@ -2,5 +2,13 @@
 <div *ngIf='recipe'>
   <h2>{{ recipe.name }}</h2>
   <img src="http://{{recipe.photoUrl}}"/>
+  <ul>
+    <li *ngFor="let ingredient of recipe.ingredients">
+        {{ingredient['measure']}} | {{ingredient['name']}}
+    </li>
+  </ul>
   <p>{{recipe.description}}</p>
+    <button (click)="saveRecipe(recipe.id);">
+      Add to your recipe list
+    </button>
 </div>
