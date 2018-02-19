@@ -7,11 +7,18 @@ import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component';
 
 import { SavedComponent } from './saved/saved.component';
 import { SavedDetailComponent } from './saved/saved-detail/saved-detail.component';
+import { AuthenticationService } from './shared/authentication.service';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'dashboard', component: DashboardComponent },
   { path: 'recipes', component: RecipesComponent },
   { path: 'recipes/:id', component: RecipeDetailComponent },
   { path: 'saved', component: SavedComponent },
@@ -21,6 +28,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [ RouterModule.forRoot(routes) ],
-  exports: [ RouterModule ]
+  exports: [ RouterModule ],
+  providers: [AuthenticationService]
 })
 export class AppRoutingModule { }

@@ -1,3 +1,7 @@
+*:focus {
+  outline: none!important;
+}
+
 header {
   height: 70vh;
   display: flex;
@@ -27,10 +31,19 @@ nav {
   font-size: 1.7em;
 }
 
-
-.back-btn {
-  background: transparent;
-  color: #FFF;
-  border: none;
-  margin-left: 20px;
+.login {
+  width: 80%;
+  display: flex;
+  justify-content: flex-end;
 }
+
+.is-solid {
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  padding: 5px;
+}
+
+.is-solid:active {
+  outline: none;
+}
+

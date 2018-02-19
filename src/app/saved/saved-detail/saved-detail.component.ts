@@ -42,9 +42,6 @@ export class SavedDetailComponent implements OnInit {
     .subscribe(res => {
       res.forEach(observable => {
         observable.subscribe(list => {
-          list.recipes.forEach(recipe => {
-            console.log(recipe);
-          });
           return that.list = list;
         });
       });

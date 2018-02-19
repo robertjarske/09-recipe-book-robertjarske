@@ -5,6 +5,24 @@
     <a class="nav-link" routerLink="/recipes">Recipes</a>
     <a class="nav-link" routerLink="/saved">Saved Recipes</a>
   </nav>
+  <div class="login">
+    <clr-dropdown [clrCloseMenuOnItemClick]="true">
+      <button class="icon" type="button" clrDropdownTrigger>
+          <clr-icon shape="user" class="is-solid" size="48"></clr-icon>
+          <clr-icon shape="caret down"></clr-icon>
+      </button>
+      <clr-dropdown-menu *clrIfOpen>
+          <div *ngIf="isLoggedIn">
+            <button type="button" clrDropdownItem><a routerLink="/dashboard">My Page</a></button>
+            <button type="button" clrDropdownItem (click)="logout()">Logout</button>
+          </div>
+          <div *ngIf="!isLoggedIn">
+            <button type="button" clrDropdownItem><a routerLink="/register">Register</a></button>
+            <button type="button" clrDropdownItem><a routerLink="/login">Login</a></button>
+          </div>
+      </clr-dropdown-menu>
+    </clr-dropdown>
+  </div>
 </header>
 
 <router-outlet></router-outlet>

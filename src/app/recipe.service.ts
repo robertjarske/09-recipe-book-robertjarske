@@ -23,25 +23,33 @@ export class RecipeService {
     private restangular: Restangular
   ) {}
 
-  getRecipes(): Observable<Recipe[]> {
-    const apiUrl = 'http://www.themealdb.com/api/json/v1/1/filter.php?c=Vegetarian';
+  getRecipes(query: string): Observable<Recipe[]> {
+    let apiUrl = '';
+    if (query == null || query === 'null') {
+
+      apiUrl = `http://www.themealdb.com/api/json/v1/1/filter.php?c=vegetarian`;
+    } else {
+
+      apiUrl = `http://www.themealdb.com/api/json/v1/1/search.php?s=${query}`;
+    }
+
     const recipes = [];
 
     return this.http.get<Recipe[]>(apiUrl)
-      .pipe(
-        flatMap((res) => {
-          return res['meals'];
-        }),
-        map((meal: Recipe[]) => {
-          const recipe = new Recipe(
-            +meal['idMeal'],
-            meal['strMeal'],
-            meal['strIngredient'],
-            meal['strInstructions'],
-            `http://${meal['strMealThumb']}`,
-            meal['strYoutube']
-          );
-          recipes.push(recipe);
+    .pipe(
+      flatMap((res) => {
+        return res['meals'];
+      }),
+      map((meal: Recipe[]) => {
+        const recipe = new Recipe(
+          +meal['idMeal'],
+          meal['strMeal'],
+          meal['strIngredient'],
+          meal['strInstructions'],
+          `http://${meal['strMealThumb']}`,
+          meal['strYoutube']
+        );
+        recipes.push(recipe);
           return recipes;
         })
       );
@@ -78,25 +86,6 @@ export class RecipeService {
         })
       );
   }
-
-  // saveRecipe(listId: number, recipeId: number): Observable<List> {
-  //   const localUrl = `http://localhost:3000/saved/${listId}`;
-  //   console.log(listId);
-  //   console.log(recipeId);
-  //   const httpOptions = {
-  //     headers: new HttpHeaders({
-  //       'Accept': 'application/json',
-  //       'Content-Type':  'application/json'
-  //     })
-  //   };
-  //   console.log(httpOptions);
-  //   const body = {recipes: [recipeId]};
-  //   console.log(body);
-  //   return this.http.patch<List>(localUrl, body, httpOptions)
-  //   .pipe(
-  //     tap((list: List) => console.log(`added recipe w/ id=${recipeId}`))
-  //   );
-  // }
 
   saveRecipe(listId: number, recipeId: number) {
     this.restangular.one('saved', listId).get().subscribe(res => {

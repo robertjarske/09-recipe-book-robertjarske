@@ -13,11 +13,11 @@ export class LandingPageComponent implements OnInit {
   constructor(private recipeService: RecipeService) { }
 
   ngOnInit() {
-    this.getRecipes();
+    this.getRecipes(null);
   }
 
-  getRecipes(): void {
-    this.recipeService.getRecipes()
+  getRecipes(query: string): void {
+    this.recipeService.getRecipes(query)
       .subscribe(recipes => this.recipes = recipes);
   }
 

@@ -5,6 +5,13 @@ import { RecipeService } from '../recipe.service';
 import { List } from '../list';
 import { Saved } from '../saved/saved.model';
 
+const delay = (() => {
+  let timer = 0;
+  return (callback, ms) => {
+    clearTimeout (timer);
+    timer = setTimeout(callback, ms);
+  };
+})();
 
 @Component({
   selector: 'app-recipes',
@@ -24,29 +31,27 @@ export class RecipesComponent implements OnInit {
     this.filters = [
       {
         id: 0,
-        description: 'All'
+        description: 'Pasta'
       },
       {
         id: 1,
-        description: 'Gluten'
+        description: 'Vegan'
       },
       {
         id: 2,
-        description: 'Lactose'
-      },
-      {
-        id: 3,
-        description: 'Low fat'
-      },
-      {
-        id: 4,
-        description: 'Balanced'
+        description: 'Vegetarian'
       },
     ];
   }
 
-  getRecipes(): void {
-   this.recipeService.getRecipes()
+  ngOnInit() {
+    this.getRecipes(null);
+
+    this.recipeService.getLists().subscribe(res => this.lists = res);
+  }
+
+  getRecipes(query: string): void {
+   this.recipeService.getRecipes(query)
     .subscribe(recipes => {
       this.recipes = recipes;
     });
@@ -67,12 +72,16 @@ export class RecipesComponent implements OnInit {
     this.showModal = !this.showModal;
   }
 
-
-  ngOnInit() {
-    this.getRecipes();
-
-    this.recipeService.getLists().subscribe(res => this.lists = res);
+  search(query) {
+    delay(() => {
+      this.recipeService.getRecipes(query).subscribe(recipes => {
+        this.recipes = recipes;
+      });
+    }, 700);
   }
+
 }
+
+
 
 

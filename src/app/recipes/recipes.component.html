@@ -1,8 +1,9 @@
 <h2>Our Recipes</h2>
+<input (input)="search($event.target.value)" name="search" type="text" id="formFields_2" placeholder="Search for a recipe...." size="45">
 <nav class="subnav">
     <ul class="nav">
         <li *ngFor="let filter of filters" class="nav-item">
-            <span class="nav-link" (click)="toggleFilter(filter.id)">{{filter.description}}</span>
+            <span class="nav-link" (click)="search(filter.description)">{{filter.description}}</span>
         </li>
     </ul>
 </nav>
