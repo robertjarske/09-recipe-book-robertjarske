@@ -1,7 +1,7 @@
 <button (click)='goBack()'>Go Back</button>
 <div class="detail" *ngIf='recipe'>
   <h2>{{ recipe.name }}</h2>
-  <img src="http://{{recipe.photoUrl}}"/>
+  <img src="{{recipe.photoUrl}}"/>
   <div class="holder">
     <p>{{recipe.description}}</p>
     <div class="list">

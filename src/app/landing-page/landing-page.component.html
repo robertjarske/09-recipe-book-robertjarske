@@ -9,7 +9,7 @@
   </a>
 </div> -->
 
-<ul class="row" *ngIf="recipes else loading">
+<ul class="row" *ngIf="recipes">
     <a *ngFor="let recipe of recipes | slice:0:4" class="col-1-4"
     routerLink="/recipes/{{recipe.id}}">
     <li>
@@ -23,6 +23,5 @@
       </div>
     </li>
     </a>
-    <ng-template #loading>Loading recipes...</ng-template>
   </ul>
 

@@ -23,7 +23,7 @@ export class RecipesComponent implements OnInit {
   recipes: Recipe[];
   lists: List[];
   toggle: boolean;
-  private showModal: boolean;
+  public showModal: boolean;
   private selectedId: number;
   private listTitle: string;
 

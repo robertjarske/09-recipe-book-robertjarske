@@ -3,6 +3,7 @@ import { SavedService } from './saved.service';
 import { Saved } from './saved.model';
 import { List } from '../list';
 import { RecipeService } from '../recipe.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-saved',
@@ -16,7 +17,8 @@ export class SavedComponent implements OnInit {
 
   constructor(
 
-    private recipeService: RecipeService
+    private recipeService: RecipeService,
+    private location: Location
   ) { }
 
   ngOnInit() {
@@ -24,6 +26,10 @@ export class SavedComponent implements OnInit {
     this.recipeService.getLists().subscribe((list: List[]) => {
       return that.list = list;
     });
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
 }

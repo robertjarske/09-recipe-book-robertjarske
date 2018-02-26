@@ -7,7 +7,7 @@
     <li *ngFor="let recipe of list.recipes" class="col-1-4">
       <div class="card">
         <div class="card-img">
-          <img src="http://{{recipe['meals'][0]['strMealThumb']}}">
+          <img src="{{recipe['meals'][0]['strMealThumb']}}">
           <div class="card-block" routerLink="/recipes/{{recipe['meals'][0]['idMeal']}}">
               <h4 class="card-title">{{recipe['meals'][0]['strMeal']}}</h4>
            </div>

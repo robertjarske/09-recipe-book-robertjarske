@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RestangularModule, Restangular } from 'ngx-restangular';
 import { ClarityModule } from '@clr/angular';
-import { JwtModule } from '@auth0/angular-jwt';
+import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
@@ -32,6 +32,16 @@ export function RestangularConfigFactory(RestangularProvider) {
   RestangularProvider.setBaseUrl('http://localhost:3000');
 }
 
+// export function jwtOptionsFactory() {
+//   return {
+//       tokenGetter: () => {
+//         return localStorage.getItem('currentUser');
+//       },
+//       whitelistedDomains: ['http://yummy.test'],
+//       skipWhenExpired: true
+//   };
+// }
+
 
 @NgModule({
   declarations: [
@@ -57,6 +67,10 @@ export function RestangularConfigFactory(RestangularProvider) {
     ClarityModule,
     RestangularModule.forRoot(RestangularConfigFactory),
     JwtModule.forRoot({
+        // jwtOptionsProvider: {
+        //   provide: JWT_OPTIONS,
+        //   useFactory: jwtOptionsFactory
+        // }
       config: {
         tokenGetter: () => {
           return localStorage.getItem('currentUser');

@@ -27,10 +27,10 @@ export class RecipeService {
     let apiUrl = '';
     if (query == null || query === 'null') {
 
-      apiUrl = `http://www.themealdb.com/api/json/v1/1/filter.php?c=vegetarian`;
+      apiUrl = `https://www.themealdb.com/api/json/v1/1/filter.php?c=vegetarian`;
     } else {
 
-      apiUrl = `http://www.themealdb.com/api/json/v1/1/search.php?s=${query}`;
+      apiUrl = `https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`;
     }
 
     const recipes = [];
@@ -46,7 +46,7 @@ export class RecipeService {
           meal['strMeal'],
           meal['strIngredient'],
           meal['strInstructions'],
-          `http://${meal['strMealThumb']}`,
+          meal['strMealThumb'],
           meal['strYoutube']
         );
         recipes.push(recipe);
@@ -56,7 +56,7 @@ export class RecipeService {
   }
 
   getRecipe(id: number): Observable<Recipe> {
-    const apiUrl = `http://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
+    const apiUrl = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
 
     return this.http.get<Recipe>(apiUrl)
     .pipe(
@@ -113,7 +113,7 @@ export class RecipeService {
       .pipe(
         map((list: any) => {
           return list.recipes.map((recipeId: any) => {
-            return this.http.get(`http://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeId}`)
+            return this.http.get(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeId}`)
             .pipe(
               map((res: any) => {
                   recipes.push(res);
