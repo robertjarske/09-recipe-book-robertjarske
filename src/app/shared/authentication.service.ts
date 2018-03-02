@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-import { JwtModule } from '@auth0/angular-jwt';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 
 
@@ -12,7 +12,7 @@ export class AuthenticationService {
 
   constructor(
     private http: HttpClient,
-    private jwt: JwtModule
+    private jwtHelper: JwtHelperService
   ) {}
 
   login(username: string, password: string) {
@@ -21,7 +21,7 @@ export class AuthenticationService {
         if (user && user.data.access_token) {
           localStorage.setItem('currentUser', JSON.stringify(user));
         }
-
+        console.log(user);
         return user;
       });
   }

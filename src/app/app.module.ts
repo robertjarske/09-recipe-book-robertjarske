@@ -18,13 +18,13 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { SavedComponent } from './saved/saved.component';
 import { SavedDetailComponent } from './saved/saved-detail/saved-detail.component';
 import { LoginComponent } from './login/login.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { RegisterComponent } from './register/register.component';
 
 // Services
 import { RecipeService } from './recipe.service';
 import { SavedService } from './saved/saved.service';
 import { AuthenticationService } from './shared/authentication.service';
-import { RegisterComponent } from './register/register.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 
@@ -32,15 +32,15 @@ export function RestangularConfigFactory(RestangularProvider) {
   RestangularProvider.setBaseUrl('http://localhost:3000');
 }
 
-// export function jwtOptionsFactory() {
-//   return {
-//       tokenGetter: () => {
-//         return localStorage.getItem('currentUser');
-//       },
-//       whitelistedDomains: ['http://yummy.test'],
-//       skipWhenExpired: true
-//   };
-// }
+export function jwtOptionsFactory() {
+  return {
+      tokenGetter: () => {
+        return JSON.parse(localStorage.getItem('currentUser')).data.access_token;
+      },
+      whitelistedDomains: ['http://yummy.test'],
+      skipWhenExpired: true
+  };
+}
 
 
 @NgModule({
@@ -67,17 +67,17 @@ export function RestangularConfigFactory(RestangularProvider) {
     ClarityModule,
     RestangularModule.forRoot(RestangularConfigFactory),
     JwtModule.forRoot({
-        // jwtOptionsProvider: {
-        //   provide: JWT_OPTIONS,
-        //   useFactory: jwtOptionsFactory
-        // }
-      config: {
-        tokenGetter: () => {
-          return localStorage.getItem('currentUser');
-        },
-        skipWhenExpired: true,
-        whitelistedDomains: ['http://yummy.test']
-      },
+        jwtOptionsProvider: {
+          provide: JWT_OPTIONS,
+          useFactory: jwtOptionsFactory
+        }
+      // config: {
+      //   tokenGetter: () => {
+      //     return localStorage.getItem('currentUser');
+      //   },
+      //   skipWhenExpired: true,
+      //   whitelistedDomains: ['http://yummy.test']
+      // },
     })
   ],
   providers: [RecipeService, SavedService, HttpClientModule, AuthenticationService],
