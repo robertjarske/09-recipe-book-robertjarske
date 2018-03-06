@@ -34,9 +34,10 @@ export function RestangularConfigFactory(RestangularProvider) {
 
 export function jwtOptionsFactory() {
   return {
-      tokenGetter: () => {
-        return JSON.parse(localStorage.getItem('currentUser')).data.access_token;
-      },
+    tokenGetter: () => {
+      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      return currentUser ? currentUser.data.access_token : null;
+    },
       whitelistedDomains: ['http://yummy.test'],
       skipWhenExpired: true
   };

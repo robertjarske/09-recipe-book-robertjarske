@@ -1,5 +1,5 @@
 <button class="back-btn" (click)='goBack()'><clr-icon shape="rewind" size="34" class="is-solid"></clr-icon></button>
-<div *ngIf='list'>
+<div *ngIf='list else empty'>
   <h2>{{ list.title }}</h2>
   <ul>
 
@@ -14,11 +14,13 @@
         </div>
       </div>
       <div class="card-footer">
-        <button type="button" class="btn btn-danger" (click)="removeRecipe(list.id, recipe['meals'][0]['idMeal'])">
+        <button type="button" class="btn btn-danger" (click)="removeRecipe(list[0].list_id, recipe['meals'][0]['idMeal'])">
           Remove
         </button>
       </div>
     </li>
   </ul>
 </div>
-
+<div class="empty-list">
+  <ng-template #empty><p class="empty-list">No recipes added yet</p></ng-template>
+</div>

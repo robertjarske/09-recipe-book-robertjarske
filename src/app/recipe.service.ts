@@ -10,7 +10,13 @@ import { Http, Response } from '@angular/http';
 import { List } from './list';
 import { Restangular } from 'ngx-restangular';
 
-
+const jsonParse = JSON.parse(localStorage.getItem('currentUser'));
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization':  `Bearer ${jsonParse.data.access_token}`
+      })
+    };
 
 
 @Injectable()
@@ -88,32 +94,34 @@ export class RecipeService {
   }
 
   saveRecipe(listId: number, recipeId: number) {
-    this.restangular.one('saved', listId).get().subscribe(res => {
-      res.recipes.push(recipeId);
-      res.save();
-    });
+    const body = {list_id: +listId, recipe_id: recipeId};
+    this.http.post('http://yummy.test/api/save', body, httpOptions)
+    .subscribe();
   }
 
-  removeRecipeFromList(listId: number, recipeId: number): Observable<List> {
-    return this.restangular.one('saved', listId).get().subscribe(res => {
-      res.recipes = res.recipes.filter(id => id !== recipeId);
-      res.save();
-      this.getList(listId);
-    });
+  removeRecipeFromList(listId: number, recipeId: number) {
+    return this.http.delete(`http://yummy.test/api/listrecipes/${listId}/${recipeId}`, httpOptions)
+      .subscribe();
 
   }
 
   getLists() {
-    return this.restangular.all('saved').getList();
+    return this.http.get(`http://yummy.test/api/lists`, httpOptions)
+      .pipe(
+        map((lists: any) => {
+          const list = Object.keys(lists.data).map(key => lists.data[key]);
+          return list;
+        })
+      );
   }
 
   getList(listId: number) {
     const recipes: any[] = [];
-    return this.http.get(`http://localhost:3000/saved/${listId}`)
+    return this.http.get(`http://yummy.test/api/listrecipes/${listId}`)
       .pipe(
         map((list: any) => {
-          return list.recipes.map((recipeId: any) => {
-            return this.http.get(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeId}`)
+          return list.map((recipeId: any) => {
+            return this.http.get(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeId.recipe_id}`)
             .pipe(
               map((res: any) => {
                   recipes.push(res);
@@ -127,10 +135,7 @@ export class RecipeService {
   }
 
   createList(listTitle: string) {
-    return this.restangular.all('saved').post({ 'title': listTitle, 'recipes': [] });
+    return this.http.post(`http://yummy.test/api/lists`, {title: listTitle}, httpOptions).subscribe();
   }
 
-  deleteList(listId: number) {
-    return this.restangular.one('saved', listId).remove();
-  }
 }

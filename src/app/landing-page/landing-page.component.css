@@ -12,13 +12,6 @@ li {
 
 }
 
-/* li>a {
-  display: flex;
-  flex-direction: column;
-  text-decoration: none;
-  color: #000;
-} */
-
 
 ul {
   display: flex;
