@@ -10,13 +10,13 @@ import { Http, Response } from '@angular/http';
 import { List } from './list';
 import { Restangular } from 'ngx-restangular';
 
-const jsonParse = JSON.parse(localStorage.getItem('currentUser'));
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization':  `Bearer ${jsonParse.data.access_token}`
-      })
-    };
+// const jsonParse = JSON.parse(localStorage.getItem('currentUser'));
+//     const httpOptions = {
+//       headers: new HttpHeaders({
+//         'Content-Type':  'application/json',
+//         'Authorization':  `Bearer ${jsonParse.data.access_token}`
+//       })
+//     };
 
 
 @Injectable()
@@ -94,18 +94,54 @@ export class RecipeService {
   }
 
   saveRecipe(listId: number, recipeId: number) {
+
+    const jsonParse = JSON.parse(localStorage.getItem('currentUser'));
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization':  `Bearer ${jsonParse.data.access_token}`
+      })
+    };
+
     const body = {list_id: +listId, recipe_id: recipeId};
-    this.http.post('http://yummy.test/api/save', body, httpOptions)
-    .subscribe();
+    if (jsonParse.data.access_token) {
+      this.http.post('http://yummy.test/api/save', body, httpOptions)
+      .subscribe();
+    } else {
+
+      return;
+    }
   }
 
   removeRecipeFromList(listId: number, recipeId: number) {
+    const jsonParse = JSON.parse(localStorage.getItem('currentUser'));
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization':  `Bearer ${jsonParse.data.access_token}`
+      })
+    };
+
+    if (jsonParse.data.access_token) {
     return this.http.delete(`http://yummy.test/api/listrecipes/${listId}/${recipeId}`, httpOptions)
       .subscribe();
+    } else {
+      return;
+    }
+
 
   }
 
   getLists() {
+    const jsonParse = JSON.parse(localStorage.getItem('currentUser'));
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization':  `Bearer ${jsonParse.data.access_token}`
+      })
+    };
+
+    if (jsonParse.data.access_token) {
     return this.http.get(`http://yummy.test/api/lists`, httpOptions)
       .pipe(
         map((lists: any) => {
@@ -113,6 +149,9 @@ export class RecipeService {
           return list;
         })
       );
+    } else {
+      return;
+    }
   }
 
   getList(listId: number) {
@@ -135,7 +174,19 @@ export class RecipeService {
   }
 
   createList(listTitle: string) {
+    const jsonParse = JSON.parse(localStorage.getItem('currentUser'));
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization':  `Bearer ${jsonParse.data.access_token}`
+      })
+    };
+
+    if (jsonParse.data.access_token) {
     return this.http.post(`http://yummy.test/api/lists`, {title: listTitle}, httpOptions).subscribe();
+    } else {
+      return;
+    }
   }
 
 }
