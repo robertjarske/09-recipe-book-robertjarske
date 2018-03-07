@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { RestangularModule, Restangular } from 'ngx-restangular';
 import { ClarityModule } from '@clr/angular';
 import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { HttpClient } from '@angular/common/http';
@@ -25,12 +24,7 @@ import { RegisterComponent } from './register/register.component';
 import { RecipeService } from './recipe.service';
 import { SavedService } from './saved/saved.service';
 import { AuthenticationService } from './shared/authentication.service';
-
-
-
-export function RestangularConfigFactory(RestangularProvider) {
-  RestangularProvider.setBaseUrl('http://localhost:3000');
-}
+import { environment } from '../environments/environment';
 
 export function jwtOptionsFactory() {
   return {
@@ -38,7 +32,7 @@ export function jwtOptionsFactory() {
       const currentUser = JSON.parse(localStorage.getItem('currentUser'));
       return currentUser ? currentUser.data.access_token : null;
       },
-      whitelistedDomains: ['http://yummy.test'],
+      whitelistedDomains: [`${environment.YUMMI_API}`],
       skipWhenExpired: true
   };
 }
@@ -66,19 +60,11 @@ export function jwtOptionsFactory() {
     AppRoutingModule,
     HttpClientModule,
     ClarityModule,
-    RestangularModule.forRoot(RestangularConfigFactory),
     JwtModule.forRoot({
         jwtOptionsProvider: {
           provide: JWT_OPTIONS,
           useFactory: jwtOptionsFactory
         }
-      // config: {
-      //   tokenGetter: () => {
-      //     return localStorage.getItem('currentUser');
-      //   },
-      //   skipWhenExpired: true,
-      //   whitelistedDomains: ['http://yummy.test']
-      // },
     })
   ],
   providers: [RecipeService, SavedService, HttpClientModule, AuthenticationService],

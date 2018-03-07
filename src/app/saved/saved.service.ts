@@ -3,6 +3,7 @@ import { forEach } from '@angular/router/src/utils/collection';
 import { Saved } from './saved.model';
 import { Recipe } from '../recipe';
 import { Observable } from 'rxjs/Observable';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class SavedService {
@@ -15,7 +16,7 @@ export class SavedService {
   getLists() {
     const LISTS = [];
     const promise = new Promise((resolve, reject) => {
-      fetch('http://localhost:3000/saved')
+      fetch(`${environment.YUMMI_API}/saved`)
         .then(res => res.json())
         .then(res => {
           res.forEach(item => {
@@ -34,7 +35,7 @@ export class SavedService {
   getList(listId: number) {
     let list: Saved;
     const promise = new Promise((resolve, reject) => {
-      fetch(`http://localhost:3000/saved/${listId}`)
+      fetch(`${environment.YUMMI_API}/saved/${listId}`)
         .then(res => res.json())
         .then(res => {
           list = new Saved(
@@ -51,7 +52,7 @@ export class SavedService {
 
   addRecipeToList(listId: number, recipeId: number) {
     const promise = new Promise((resolve, reject) => {
-      fetch(`http://localhost:3000/saved/${listId}`, {
+      fetch(`${environment.YUMMI_API}/saved/${listId}`, {
         headers: {
           'Accept': 'application/json',
           'Content-type': 'application/json'

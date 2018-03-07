@@ -4,5 +4,7 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  THE_MEAL_DB_API: 'https://www.themealdb.com/api/json/v1/1',
+  YUMMI_API: 'http://yummy.test'
 };

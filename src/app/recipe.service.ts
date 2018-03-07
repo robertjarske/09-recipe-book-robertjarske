@@ -8,7 +8,8 @@ import { catchError, flatMap, map, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Http, Response } from '@angular/http';
 import { List } from './list';
-import { Restangular } from 'ngx-restangular';
+
+import { environment } from '../environments/environment';
 
 // const jsonParse = JSON.parse(localStorage.getItem('currentUser'));
 //     const httpOptions = {
@@ -25,18 +26,16 @@ export class RecipeService {
   list: List[];
 
   constructor(
-    private http: HttpClient,
-    private restangular: Restangular
+    private http: HttpClient
   ) {}
 
   getRecipes(query: string): Observable<Recipe[]> {
     let apiUrl = '';
     if (query == null || query === 'null') {
-
-      apiUrl = `https://www.themealdb.com/api/json/v1/1/filter.php?c=vegetarian`;
+      apiUrl = `${environment.THE_MEAL_DB_API}/filter.php?c=vegetarian`;
     } else {
 
-      apiUrl = `https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`;
+      apiUrl = `${environment.THE_MEAL_DB_API}/search.php?s=${query}`;
     }
 
     const recipes = [];
@@ -62,7 +61,7 @@ export class RecipeService {
   }
 
   getRecipe(id: number): Observable<Recipe> {
-    const apiUrl = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
+    const apiUrl = `${environment.THE_MEAL_DB_API}/lookup.php?i=${id}`;
 
     return this.http.get<Recipe>(apiUrl)
     .pipe(
@@ -105,7 +104,7 @@ export class RecipeService {
 
     const body = {list_id: +listId, recipe_id: recipeId};
     if (jsonParse.data.access_token) {
-      this.http.post('http://yummy.test/api/save', body, httpOptions)
+      this.http.post(`${environment.YUMMI_API}/save`, body, httpOptions)
       .subscribe();
     } else {
 
@@ -123,7 +122,7 @@ export class RecipeService {
     };
 
     if (jsonParse.data.access_token) {
-    return this.http.delete(`http://yummy.test/api/listrecipes/${listId}/${recipeId}`, httpOptions)
+    return this.http.delete(`${environment.YUMMI_API}/listrecipes/${listId}/${recipeId}`, httpOptions)
       .subscribe();
     } else {
       return;
@@ -142,7 +141,7 @@ export class RecipeService {
     };
 
     if (jsonParse.data.access_token) {
-    return this.http.get(`http://yummy.test/api/lists`, httpOptions)
+    return this.http.get(`${environment.YUMMI_API}/lists`, httpOptions)
       .pipe(
         map((lists: any) => {
           const list = Object.keys(lists.data).map(key => lists.data[key]);
@@ -156,11 +155,11 @@ export class RecipeService {
 
   getList(listId: number) {
     const recipes: any[] = [];
-    return this.http.get(`http://yummy.test/api/listrecipes/${listId}`)
+    return this.http.get(`${environment.YUMMI_API}/listrecipes/${listId}`)
       .pipe(
         map((list: any) => {
           return list.map((recipeId: any) => {
-            return this.http.get(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeId.recipe_id}`)
+            return this.http.get(`${environment.THE_MEAL_DB_API}/lookup.php?i=${recipeId.recipe_id}`)
             .pipe(
               map((res: any) => {
                   recipes.push(res);
@@ -183,7 +182,7 @@ export class RecipeService {
     };
 
     if (jsonParse.data.access_token) {
-    return this.http.post(`http://yummy.test/api/lists`, {title: listTitle}, httpOptions).subscribe();
+    return this.http.post(`${environment.YUMMI_API}/lists`, {title: listTitle}, httpOptions).subscribe();
     } else {
       return;
     }

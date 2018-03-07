@@ -3,9 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { JwtHelperService } from '@auth0/angular-jwt';
-
-
-
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class AuthenticationService {
@@ -16,7 +14,7 @@ export class AuthenticationService {
   ) {}
 
   login(username: string, password: string) {
-    return this.http.post<any>('http://yummy.test/api/auth/login', { email: username, password: password })
+    return this.http.post<any>(`${environment.YUMMI_API}/auth/login`, { email: username, password: password })
       .map(user => {
         if (user && user.data.access_token) {
           localStorage.setItem('currentUser', JSON.stringify(user));
@@ -32,7 +30,7 @@ export class AuthenticationService {
 
 
   register(name: string, email: string, password: string) {
-    return this.http.post<any>('http://yummy.test/api/auth/register', { name: name, email: email, password: password })
+    return this.http.post<any>(`${environment.YUMMI_API}/auth/register`, { name: name, email: email, password: password })
       .map(user => {
         return user;
       });
@@ -48,7 +46,7 @@ export class AuthenticationService {
       })
     };
 
-    return this.http.get<any>('http://yummy.test/api/auth/user', httpOptions)
+    return this.http.get<any>(`${environment.YUMMI_API}/auth/user`, httpOptions)
     .map(user => {
       return user;
     });
