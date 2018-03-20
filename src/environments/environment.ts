@@ -6,5 +6,5 @@
 export const environment = {
   production: false,
   THE_MEAL_DB_API: 'https://www.themealdb.com/api/json/v1/1',
-  YUMMI_API: 'http://yummy.test'
+  YUMMI_API: 'http://yummy.test/api'
 };

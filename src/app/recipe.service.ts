@@ -158,6 +158,7 @@ export class RecipeService {
     return this.http.get(`${environment.YUMMI_API}/listrecipes/${listId}`)
       .pipe(
         map((list: any) => {
+          list = Object.keys(list).map(key => list[key]);
           return list.map((recipeId: any) => {
             return this.http.get(`${environment.THE_MEAL_DB_API}/lookup.php?i=${recipeId.recipe_id}`)
             .pipe(
